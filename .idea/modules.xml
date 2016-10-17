@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/personal.iml" filepath="$PROJECT_DIR$/personal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/personal-configfile/personal-configfile.iml" filepath="$PROJECT_DIR$/personal-configfile/personal-configfile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/personal-controller/personal-controller.iml" filepath="$PROJECT_DIR$/personal-controller/personal-controller.iml" />
+      <module fileurl="file://$PROJECT_DIR$/personal-dao/personal-dao.iml" filepath="$PROJECT_DIR$/personal-dao/personal-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/personal-entity/personal-entity.iml" filepath="$PROJECT_DIR$/personal-entity/personal-entity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/personal-service/personal-service.iml" filepath="$PROJECT_DIR$/personal-service/personal-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/personal-web/personal-web.iml" filepath="$PROJECT_DIR$/personal-web/personal-web.iml" />
+    </modules>
+  </component>
+</project>

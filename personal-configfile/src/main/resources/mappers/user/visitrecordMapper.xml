@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.personal.dao.VisitRecordDao" >
+  <resultMap id="BaseResultMap" type="com.personal.entity.VisitRecord" >
+    <id column="Id" property="id" jdbcType="CHAR" />
+    <result column="IPaddr" property="ipaddr" jdbcType="VARCHAR" />
+    <result column="Sessionid" property="sessionid" jdbcType="VARCHAR" />
+    <result column="Date" property="date" jdbcType="TIMESTAMP" />
+    <result column="UnUsed1" property="unused1" jdbcType="VARCHAR" />
+    <result column="UnUsed2" property="unused2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Id, IPaddr,Sessionid, Date, UnUsed1, UnUsed2
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from visitrecord
+    where Id = #{id,jdbcType=CHAR}
+  </select>
+  <select id="selectByMap" parameterType="Map" resultMap="BaseResultMap">
+    select * from visitrecord
+    <where>
+      <if test="id !=null and id !=''">
+        and Id like #{id}
+      </if>
+      <if test="sessionid !=null and sessionid !=''">
+        and Sessionid = #{sessionid}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from visitrecord
+    where Id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insertSelective" parameterType="com.personal.entity.VisitRecord" >
+    insert into visitrecord
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="ipaddr != null" >
+        IPaddr,
+      </if>
+      <if test="sessionid != null" >
+        Sessionid,
+      </if>
+      <if test="date != null" >
+        Date,
+      </if>
+      <if test="unused1 != null" >
+        UnUsed1,
+      </if>
+      <if test="unused2 != null" >
+        UnUsed2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="ipaddr != null" >
+        #{ipaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionid != null" >
+        #{sessionid,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unused1 != null" >
+        #{unused1,jdbcType=VARCHAR},
+      </if>
+      <if test="unused2 != null" >
+        #{unused2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.personal.entity.VisitRecord" >
+    update visitrecord
+    <set >
+      <if test="ipaddr != null" >
+        IPaddr = #{ipaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionid != null" >
+        Sessionid = #{sessionid,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        Date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unused1 != null" >
+        UnUsed1 = #{unused1,jdbcType=VARCHAR},
+      </if>
+      <if test="unused2 != null" >
+        UnUsed2 = #{unused2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=CHAR}
+  </update>
+  <select id="findVisitRecord" parameterType="Map" resultMap="BaseResultMap">
+    select * from visitrecord
+    <where>
+      <if test="nickname !=null and nickname != ''">
+        and Nickname like #{nickname}
+      </if>
+    </where>
+    <if test="start!=null and size!=null">
+      order by id limit ${start},${size};
+    </if>
+  </select>
+
+  <select id="getTotalVisitRecord" parameterType="Map" resultType="Long">
+    select count(*) from visitrecord
+    <where>
+      <if test="nickname !=null and nickname != ''">
+        and Nickname like #{nickname}
+      </if>
+    </where>
+  </select>
+
+  <select id="getMaxID" resultType="String">
+    select MAX(id) from visitrecord
+    <where>
+      <if test="prefix !=null and prefix != ''">
+        and id like #{prefix}
+      </if>
+    </where>
+  </select>
+</mapper>

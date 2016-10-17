@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.personal.dao.UserDao">
+	<resultMap id="BaseResultMap" type="com.personal.entity.User">
+		<id column="Uid" property="uid" jdbcType="CHAR" />
+		<result column="Email" property="email" jdbcType="VARCHAR" />
+		<result column="Password" property="password" jdbcType="VARCHAR" />
+		<result column="Nickname" property="nickname" jdbcType="VARCHAR" />
+		<result column="Gender" property="gender" jdbcType="TINYINT" />
+		<result column="Status" property="status" jdbcType="TINYINT" />
+		<result column="ActivationCode" property="activationcode"
+			jdbcType="CHAR" />
+		<result column="HeadPicture" property="headpicture" jdbcType="VARCHAR" />
+		<result column="RegisterTime" property="registertime" jdbcType="DATE" />
+		<result column="LoginCounts" property="logincounts" jdbcType="INTEGER" />
+		<result column="Score" property="score" jdbcType="INTEGER" />
+		<result column="Role" property="role" jdbcType="TINYINT" />
+		<result column="Weibo" property="weibo" jdbcType="VARCHAR" />
+		<result column="QQ" property="qq" jdbcType="VARCHAR" />
+		<result column="Brief" property="brief" jdbcType="VARCHAR" />
+		<result column="Location" property="location" jdbcType="VARCHAR" />
+		<result column="LastTime" property="lasttime" jdbcType="TIMESTAMP" />
+		<result column="LastIp" property="lastip" jdbcType="VARCHAR" />
+		<result column="UnUsed1" property="unused1" jdbcType="VARCHAR" />
+		<result column="UnUsed2" property="unused2" jdbcType="VARCHAR" />
+		<result column="UnUsed3" property="unused3" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="PartResultMap" type="com.personal.entity.UserPart">
+		<id column="Uid" property="uid" jdbcType="CHAR" />
+		<result column="Nickname" property="nickname" jdbcType="VARCHAR" />
+		<result column="HeadPicture" property="headpicture" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		Uid, Email, Password, Nickname, Gender, Status,
+		ActivationCode,
+		HeadPicture, RegisterTime,
+		LoginCounts, Score, Role,
+		Weibo, QQ, Brief, Location, LastTime, LastIp, UnUsed1,
+		UnUsed2, UnUsed3
+	</sql>
+
+	<sql id="Base_Column_List_Part">
+		Uid,Nickname, HeadPicture
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from user
+		where Uid = #{uid,jdbcType=CHAR}
+	</select>
+
+	<select id="selectPartByPrimaryKey" resultMap="PartResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List_Part" />
+		from user
+		where Uid = #{uid,jdbcType=CHAR}
+	</select>
+
+	<select id="selectByMap" parameterType="Map" resultMap="BaseResultMap">
+		select * from user
+		<where>
+			<if test="uid !=null and uid !=''">
+				and Uid = #{uid}
+			</if>
+			<if test="email !=null and email !=''">
+				and Email = #{email}
+			</if>
+			<if test="activationcode !=null and activationcode !=''">
+				and ActivationCode = #{activationcode}
+			</if>
+			<if test="nickname !=null and nickname !=''">
+				and Nickname = #{nickname}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectPartByMap" parameterType="Map" resultMap="PartResultMap">
+		select
+		<include refid="Base_Column_List_Part" />
+		from user
+		<where>
+			<if test="uid !=null and uid !=''">
+				and Uid = #{uid}
+			</if>
+			<if test="nickname !=null and nickname !=''">
+				and Nickname = #{nickname}
+			</if>
+		</where>
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from user
+		where Uid = #{uid,jdbcType=CHAR}
+	</delete>
+
+	<delete id="deleteByMap" parameterType="Map">
+		delete from user
+		<where>
+			<if test="uid !=null and uid !=''">
+				and Uid = #{uid}
+			</if>
+		</where>
+	</delete>
+
+	<insert id="insertSelective" parameterType="com.personal.entity.User">
+		insert into user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="uid != null">
+				Uid,
+			</if>
+			<if test="email != null">
+				Email,
+			</if>
+			<if test="password != null">
+				Password,
+			</if>
+			<if test="nickname != null">
+				Nickname,
+			</if>
+			<if test="gender != null">
+				Gender,
+			</if>
+			<if test="status != null">
+				Status,
+			</if>
+			<if test="activationcode != null">
+				ActivationCode,
+			</if>
+			<if test="headpicture != null">
+				HeadPicture,
+			</if>
+			<if test="registertime != null">
+				RegisterTime,
+			</if>
+			<if test="logincounts != null">
+				LoginCounts,
+			</if>
+			<if test="score != null">
+				Score,
+			</if>
+			<if test="role != null">
+				Role,
+			</if>
+			<if test="weibo != null">
+				Weibo,
+			</if>
+			<if test="qq != null">
+				QQ,
+			</if>
+			<if test="brief != null">
+				Brief,
+			</if>
+			<if test="location != null">
+				Location,
+			</if>
+			<if test="lasttime != null">
+				LastTime,
+			</if>
+			<if test="lastip != null">
+				LastIp,
+			</if>
+			<if test="unused1 != null">
+				UnUsed1,
+			</if>
+			<if test="unused2 != null">
+				UnUsed2,
+			</if>
+			<if test="unused3 != null">
+				UnUsed3,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="uid != null">
+				#{uid,jdbcType=CHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="nickname != null">
+				#{nickname,jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null">
+				#{gender,jdbcType=TINYINT},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=TINYINT},
+			</if>
+			<if test="activationcode != null">
+				#{activationcode,jdbcType=CHAR},
+			</if>
+			<if test="headpicture != null">
+				#{headpicture,jdbcType=VARCHAR},
+			</if>
+			<if test="registertime != null">
+				#{registertime,jdbcType=DATE},
+			</if>
+			<if test="logincounts != null">
+				#{logincounts,jdbcType=INTEGER},
+			</if>
+			<if test="score != null">
+				#{score,jdbcType=INTEGER},
+			</if>
+			<if test="role != null">
+				#{role,jdbcType=TINYINT},
+			</if>
+			<if test="weibo != null">
+				#{weibo,jdbcType=VARCHAR},
+			</if>
+			<if test="qq != null">
+				#{qq,jdbcType=VARCHAR},
+			</if>
+			<if test="brief != null">
+				#{brief,jdbcType=VARCHAR},
+			</if>
+			<if test="location != null">
+				#{location,jdbcType=VARCHAR},
+			</if>
+			<if test="lasttime != null">
+				#{lasttime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastip != null">
+				#{lastip,jdbcType=VARCHAR},
+			</if>
+			<if test="unused1 != null">
+				#{unused1,jdbcType=VARCHAR},
+			</if>
+			<if test="unused2 != null">
+				#{unused2,jdbcType=VARCHAR},
+			</if>
+			<if test="unused3 != null">
+				#{unused3,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.personal.entity.User">
+		update user
+		<set>
+			<if test="email != null">
+				Email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				Password = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="nickname != null">
+				Nickname = #{nickname,jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null">
+				Gender = #{gender,jdbcType=TINYINT},
+			</if>
+			<if test="status != null">
+				Status = #{status,jdbcType=TINYINT},
+			</if>
+			<if test="activationcode != null">
+				ActivationCode = #{activationcode,jdbcType=CHAR},
+			</if>
+			<if test="headpicture != null">
+				HeadPicture = #{headpicture,jdbcType=VARCHAR},
+			</if>
+			<if test="registertime != null">
+				RegisterTime = #{registertime,jdbcType=DATE},
+			</if>
+			<if test="logincounts != null">
+				LoginCounts = #{logincounts,jdbcType=INTEGER},
+			</if>
+			<if test="score != null">
+				Score = #{score,jdbcType=INTEGER},
+			</if>
+			<if test="role != null">
+				Role = #{role,jdbcType=TINYINT},
+			</if>
+			<if test="weibo != null">
+				Weibo = #{weibo,jdbcType=VARCHAR},
+			</if>
+			<if test="qq != null">
+				QQ = #{qq,jdbcType=VARCHAR},
+			</if>
+			<if test="brief != null">
+				Brief = #{brief,jdbcType=VARCHAR},
+			</if>
+			<if test="location != null">
+				Location = #{location,jdbcType=VARCHAR},
+			</if>
+			<if test="lasttime != null">
+				LastTime = #{lasttime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastip != null">
+				LastIp = #{lastip,jdbcType=VARCHAR},
+			</if>
+			<if test="unused1 != null">
+				UnUsed1 = #{unused1,jdbcType=VARCHAR},
+			</if>
+			<if test="unused2 != null">
+				UnUsed2 = #{unused2,jdbcType=VARCHAR},
+			</if>
+			<if test="unused3 != null">
+				UnUsed3 = #{unused3,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where Uid = #{uid,jdbcType=CHAR}
+	</update>
+
+	<select id="findUser" parameterType="Map" resultMap="BaseResultMap">
+		select * from user
+		<where>
+			<if test="nickname !=null and nickname != ''">
+				and Nickname like #{nickname}
+			</if>
+			<if test="email !=null and email !='' ">
+				and Email = #{email}
+			</if>
+			<if test="filter !=null and filter != ''">
+				and (Nickname like #{filter}) or (Email like #{filter}) or (Location like #{filter})
+			</if>
+		</where>
+		<if test="start!=null and size!=null">
+			order by Uid limit ${start},${size};
+
+		</if>
+	</select>
+
+	<select id="getTotalUser" parameterType="Map" resultType="Long">
+		select count(*) from user
+		<where>
+			<if test="nickname !=null and nickname != ''">
+				and Nickname like #{nickname}
+			</if>
+			<if test="email !=null and email !='' ">
+				and Email = #{email}
+			</if>
+		</where>
+	</select>
+
+	<select id="getMaxID" resultType="String">
+		select MAX(Uid) from user
+		<where>
+			<if test="prefix !=null and prefix != ''">
+				and Uid like #{prefix}
+			</if>
+		</where>
+	</select>
+</mapper>

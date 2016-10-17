@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd  
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd  
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+
+    <bean id="userService" class="com.personal.service.UserServiceImpl">
+        <property name="userDao" ref="userDao"/>
+    </bean>
+
+    <bean id="indexService" class="com.personal.service.IndexServiceImpl">
+        <property name="visitRecordDao" ref="visitRecordDao"/>
+        <property name="visitTotalDao" ref="visitTotalDao"/>
+        <property name="headPictureDao" ref="headPictureDao"/>
+        <property name="personalDao" ref="personalDao"/>
+    </bean>
+
+    <bean id="personalService" class="com.personal.service.PersonalServiceImpl">
+        <property name="personalDao" ref="personalDao"/>
+    </bean>
+
+    <bean id="headPictureService" class="com.personal.service.HeadPictureServiceImpl">
+        <property name="headPictureDao" ref="headPictureDao"/>
+    </bean>
+
+    <bean id="visitRecordService" class="com.personal.service.VisitRecordServiceImpl">
+        <property name="visitRecordDao" ref="visitRecordDao"/>
+    </bean>
+
+    <tx:advice id="serviceTxAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="visitIndex" isolation="READ_COMMITTED"  />
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:pointcut id="serviceAopPointcut" expression="execution(* com.personal.service.*.*(..))"/>
+        <aop:advisor advice-ref="serviceTxAdvice" pointcut-ref="serviceAopPointcut"/>
+    </aop:config>
+</beans>

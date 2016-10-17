@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.personal.dao.PersonalDao">
+    <resultMap id="BaseResultMap" type="com.personal.entity.Personal">
+        <id column="ID" property="id" jdbcType="INTEGER"/>
+        <result column="Title" property="title" jdbcType="VARCHAR"/>
+        <result column="PhotoUrl" property="photourl" jdbcType="VARCHAR"/>
+        <result column="Description" property="description" jdbcType="VARCHAR"/>
+        <result column="UploadDate" property="uploaddate" jdbcType="TIMESTAMP"/>
+        <result column="Status" property="status" jdbcType="BIT"/>
+        <result column="UnUsed1" property="unused1" jdbcType="VARCHAR"/>
+        <result column="UnUsed2" property="unused2" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ID, Title, PhotoUrl, Description, UploadDate, Status, UnUsed1, UnUsed2
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from personal
+        where ID = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from personal
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <insert id="insertSelective" parameterType="com.personal.entity.Personal">
+        insert into personal
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="title != null">
+                Title,
+            </if>
+            <if test="photourl != null">
+                PhotoUrl,
+            </if>
+            <if test="description != null">
+                Description,
+            </if>
+            <if test="uploaddate != null">
+                UploadDate,
+            </if>
+            <if test="status != null">
+                Status,
+            </if>
+            <if test="unused1 != null">
+                UnUsed1,
+            </if>
+            <if test="unused2 != null">
+                UnUsed2,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="photourl != null">
+                #{photourl,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="uploaddate != null">
+                #{uploaddate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=BIT},
+            </if>
+            <if test="unused1 != null">
+                #{unused1,jdbcType=VARCHAR},
+            </if>
+            <if test="unused2 != null">
+                #{unused2,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.personal.entity.Personal">
+        update personal
+        <set>
+            <if test="title != null">
+                Title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="photourl != null">
+                PhotoUrl = #{photourl,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                Description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="uploaddate != null">
+                UploadDate = #{uploaddate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                Status = #{status,jdbcType=BIT},
+            </if>
+            <if test="unused1 != null">
+                UnUsed1 = #{unused1,jdbcType=VARCHAR},
+            </if>
+            <if test="unused2 != null">
+                UnUsed2 = #{unused2,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="findPersonal" parameterType="Map" resultMap="BaseResultMap">
+        select * from personal
+        <where>
+            <if test="status !=null and status != ''">
+                and Status = #{status}
+            </if>
+        </where>
+        <if test="start!=null and size!=null">
+            order by id limit ${start},${size};
+        </if>
+    </select>
+
+    <select id="getTotalPersonal" parameterType="Map" resultType="Long">
+        select count(*) from personal
+        <where>
+            <if test="status !=null and status != ''">
+                and Status = #{status}
+            </if>
+        </where>
+    </select>
+</mapper>
