@@ -31,7 +31,6 @@ public class PersonalServiceImpl implements PersonalService {
 
     @Override
     public void addPersonalService(Personal personal,MultipartFile photo,String path) throws IOException {
-        System.out.println("addPersonalService");
         SimpleDateFormat myformat = new SimpleDateFormat("yyyyMMdd");
         String date = myformat.format(new Date()); // id前缀
         String oldFileNme = photo.getOriginalFilename();

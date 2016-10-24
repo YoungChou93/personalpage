@@ -6,8 +6,8 @@
     <file url="file://$PROJECT_DIR$/personal-controller" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/personal-dao" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/personal-entity" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/personal-interceptor" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/personal-service" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/personal-web" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/personal-web" charset="UTF-8" />
   </component>
 </project>

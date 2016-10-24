@@ -146,7 +146,7 @@
 </div>
 <div class="index-bottom">
     <div class="container">
-        <p>您是今天第${today}位访客，总第${total}位！Copyright &copy; 2016.Zhou Yang All rights reserved.</p>
+        <p>您是今天第${today}位访客，总第${total}位.Copyright &copy; 2016.Zhou Yang All rights reserved.</p>
         <p>联系方式：zhouyang.alan@gmail.com</p>
     </div>
 </div>

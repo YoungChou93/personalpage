@@ -38,6 +38,14 @@
         }
 
         $(function() {
+                window.setInterval(function () {
+                    $.post("${pageContext.request.contextPath}/user/timer.action", function (result) {
+                        if( true != result.success ){
+                            window.location.href = '${pageContext.request.contextPath}/login.action';
+                        }
+                        return;
+                    },'json');
+                }, 30000);
             $("#usertree").tree({
                 data : [ {
                     "id" : 1,

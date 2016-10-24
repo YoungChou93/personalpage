@@ -5,7 +5,12 @@ import com.personal.entity.HeadPicture;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,11 +57,37 @@ public class HeadPictureServiceImpl implements  HeadPictureService{
 
     @Override
     public void enable(Integer id) {
-
+        HeadPicture headPicture=headPictureDao.selectByPrimaryKey(id);
+        headPicture.setStatus(true);
+        headPictureDao.updateByPrimaryKeySelective(headPicture);
     }
 
     @Override
     public void disable(Integer id) {
+        HeadPicture headPicture=headPictureDao.selectByPrimaryKey(id);
+        headPicture.setStatus(false);
+        headPictureDao.updateByPrimaryKeySelective(headPicture);
+    }
 
+    @Override
+    public void addHeadPicture(HeadPicture headPicture, MultipartFile photo, String path) throws IOException {
+        SimpleDateFormat myformat = new SimpleDateFormat("yyyyMMdd");
+        String date = myformat.format(new Date()); // id前缀
+        String oldFileNme = photo.getOriginalFilename();
+        String newFileName = date + CommonUtils.uuid() + oldFileNme.substring(oldFileNme.lastIndexOf("."));
+        System.out.println(newFileName);
+        File newFile = new File(path + "res"+System.getProperty("file.separator")+"img"+System.getProperty("file.separator")+ newFileName);
+        photo.transferTo(newFile);
+        headPicture.setPhotourl("/res/img/"+newFileName);
+        headPicture.setUploaddate(new Date());
+        headPictureDao.insertSelective(headPicture);
+    }
+
+    @Override
+    public void deleteHeadPicture(Integer id, String path) {
+        HeadPicture headPicture=headPictureDao.selectByPrimaryKey(id);
+        File file = new File(path+headPicture.getPhotourl().substring(1));
+        file.delete();
+        headPictureDao.deleteByPrimaryKey(id);
     }
 }

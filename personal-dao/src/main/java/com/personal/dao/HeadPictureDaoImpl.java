@@ -21,12 +21,12 @@ public class HeadPictureDaoImpl implements HeadPictureDao {
     }
 
     @Override
-    public HeadPicture selectByPrimaryKey(String id) {
+    public HeadPicture selectByPrimaryKey(Integer id) {
         return sessionTemplate.selectOne( "com.personal.dao.HeadPictureDao.selectByPrimaryKey", id);
     }
 
     @Override
-    public int deleteByPrimaryKey(String id) {
+    public int deleteByPrimaryKey(Integer id) {
         return sessionTemplate.delete( "com.personal.dao.HeadPictureDao.deleteByPrimaryKey", id);
     }
 

@@ -76,12 +76,12 @@
 	<!--<bean class="com.point.util.PointExceptionResolver" />-->
 
 	<!-- 拦截器 -->
-	<!--<mvc:interceptors>
+	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
-			<bean class="com.point.interceptor.LoginUserInterceptor"></bean>
+			<bean class="com.personal.interceptor.IndexInterceptor"></bean>
 		</mvc:interceptor>
-	</mvc:interceptors>-->
+	</mvc:interceptors>
 
 	<!-- 文件上传 -->
 	<bean id="multipartResolver"

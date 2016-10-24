@@ -25,7 +25,7 @@ public class IndexController {
     @RequestMapping("/getIndex")
     public ModelAndView getIndex(HttpServletRequest httpServletRequest) throws Exception {
         ModelAndView mav = new ModelAndView();
-        Map<String,Object> result=indexService.visitIndex(httpServletRequest.getRemoteAddr(),httpServletRequest.getSession().getId());
+        Map<String,Object> result=indexService.visitIndex(ClientIPUtils.getClientIp(httpServletRequest),httpServletRequest.getSession().getId());
         mav.addObject("headpicture",result.get("headpicture"));
         mav.addObject("personal",result.get("personal"));
         mav.addObject("today",result.get("today"));

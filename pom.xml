@@ -11,6 +11,7 @@
         <module>personal-service</module>
         <module>personal-controller</module>
         <module>personal-web</module>
+        <module>personal-interceptor</module>
     </modules>
     <groupId>com.personal</groupId>
     <artifactId>personal</artifactId>

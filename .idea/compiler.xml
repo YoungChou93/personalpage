@@ -26,6 +26,7 @@
         <module name="personal-controller" />
         <module name="personal-dao" />
         <module name="personal-entity" />
+        <module name="personal-interceptor" />
         <module name="personal-service" />
         <module name="personal-web" />
       </profile>
@@ -36,6 +37,7 @@
       <module name="personal-controller" target="1.7" />
       <module name="personal-dao" target="1.7" />
       <module name="personal-entity" target="1.7" />
+      <module name="personal-interceptor" target="1.7" />
       <module name="personal-service" target="1.7" />
       <module name="personal-web" target="1.7" />
     </bytecodeTargetLevel>

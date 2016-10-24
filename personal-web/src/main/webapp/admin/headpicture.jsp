@@ -23,84 +23,171 @@
             src="${pageContext.request.contextPath}/jquery-easyui-1.4.4/locale/easyui-lang-zh_CN.js"></script>
     <title>管理员主页</title>
     <script type="text/javascript">
-        function openTab(text, url) {
-            if ($("#tabs").tabs("exists", text)) {
-                $("#tabs").tabs("select", text);
-            } else {
-                var content = "<iframe frameborder=0 scrolling='auto' style='width:100%;height:100%' src='${pageContext.request.contextPath}/jsps/"
-                        + url + "'></iframe>";
-                $("#tabs").tabs("add", {
-                    title : text,
-                    closable : true,
-                    content : content
-                });
+        function formatStatus(value, row, index) {
+            if (true == value) {
+                return "启用";
+            } else if (false == value) {
+                return "禁用";
             }
         }
+        function add() {
+            $("#add").dialog("open").dialog("setTitle", "添加");
+        }
+        function saveHeadPicture(){
+            if (false == $("#fm").form("validate")){
+                return;
+            }
+            $("#fm").submit();
 
+        }
+        function closeAdd() {
+            $("#add").dialog("close");
+
+        }
+        function deleteHeadPicture() {
+            var selectedRows = $("#dg").datagrid('getSelections');
+            if (selectedRows.length == 0) {
+                $.messager.alert("系统提示", "请选择！");
+                return;
+            }
+
+            var row = selectedRows[0];
+            url = "${pageContext.request.contextPath}/admin/deleteHeadPicture.action";
+            $.post(url, {
+                id : row.id
+            }, function(result) {
+                if (true == result.success) {
+                    $.messager.alert("系统提示", "删除成功！");
+                    $("#dg").datagrid("reload");
+                } else {
+                    $messager.alert("系统提示","未知错误");
+                    return;
+                }
+            }, "json");
+
+        }
+        function enable() {
+            var selectedRows = $("#dg").datagrid('getSelections');
+            if (selectedRows.length == 0) {
+                $.messager.alert("系统提示", "请选择！");
+                return;
+            }
+
+            var row = selectedRows[0];
+            url = "${pageContext.request.contextPath}/admin/enableHeadPicture.action";
+            $.post(url, {
+                id : row.id
+            }, function(result) {
+                if (true == result.success) {
+                    $.messager.alert("系统提示", "启用成功！");
+                    $("#dg").datagrid("reload");
+                } else {
+                    $messager.alert("系统提示","未知错误");
+                    return;
+                }
+            }, "json");
+
+        }
+        function disable() {
+            var selectedRows = $("#dg").datagrid('getSelections');
+            if (selectedRows.length == 0) {
+                $.messager.alert("系统提示", "请选择！");
+                return;
+            }
+
+            var row = selectedRows[0];
+            url = "${pageContext.request.contextPath}/admin/disableHeadPicture.action";
+            $.post(url, {
+                id : row.id
+            }, function(result) {
+                if (true == result.success) {
+                    $.messager.alert("系统提示", "禁用成功！");
+                    $("#dg").datagrid("reload");
+                } else {
+                    $messager.alert("系统提示","未知错误");
+                    return;
+                }
+            }, "json");
+        }
+        function look(){
+            var selectedRows = $("#dg").datagrid('getSelections');
+            if (selectedRows.length == 0) {
+                $.messager.alert("系统提示", "请选择！");
+                return;
+            }
+
+            var row = selectedRows[0];
+            $("#dlg").dialog("open").dialog("setTitle", "背景图");
+            $("#photo").attr("src","${pageContext.request.contextPath}"+row.photourl);
+
+        }
         $(function() {
-            $("#usertree").tree({
-                data : [ {
-                    "id" : 1,
-                    "text" : "用户账号管理",
-                    "attributes" : "admin/usermanage.jsp",
-                }, {
-                    "id" : 2,
-                    "text" : "在线用户管理",
-                    "attributes" : "admin/onlineusermanage.jsp",
-                }, {
-                    "id" : 3,
-                    "text" : "用户登录管理",
-                    "attributes" : "admin/loginrecordmanage.jsp",
-                } ],
-                onClick : function(node) {
-                    var tabTitle = node.text;
-                    var url = node.attributes;
-                    openTab(tabTitle, url);
+            $('#dg').datagrid({
+                pagination : true,
+                rownumbers : true,
+                fit : true,
+                singleSelect : true,
+                url : "${pageContext.request.contextPath}/admin/getHeadPictures.action",
+                loadFilter : function(result) {
+                    if (null != result.data) {
+                        return result.data;
+                    } else {
+                        $.messager.alert(result.errormsg, result.errorinfo);
+                        return;
+                    }
+                },
+                onDblClickRow : function(rowIndex, rowData) {
+                    $("#dlg").dialog("open").dialog("setTitle", "头像");
+                    $("#photo").attr("src","${pageContext.request.contextPath}"+rowData.photourl);
                 }
-            });
 
-            $("#pointtree").tree({
-                data : [ {
-                    "id" : 1,
-                    "text" : "摄影点管理",
-                    "attributes" : "admin/adminpoint.jsp",
-                }],
-                onClick : function(node) {
-                    var tabTitle = node.text;
-                    var url = node.attributes;
-                    openTab(tabTitle, url);
-                }
             });
         });
+
     </script>
 </head>
-<body class="easyui-layout">
-
-<div region="center">
-    <div id="tabs" class="easyui-tabs" fit="true" border="false">
-        <div title="首页" data-options="iconCls:'icon-home'">
-            <div align="center" style="padding-top: 100px">
-                <img
-                        src="${pageContext.request.contextPath}/res/img/logo.png"
-                        style="height: 180px; margin-top: -15px;" />
-                <p style="font-size:30px;">欢迎您，管理员！</p>
-            </div>
-        </div>
-    </div>
+<body>
+<table id="dg"  toolbar="#tb">
+    <thead>
+    <tr>
+        <th field="id" width="50" align="center">ID</th>
+        <th field="photourl" width="100" align="center" >路径</th>
+        <th field="status" width="100" align="center" formatter="formatStatus">状态</th>
+        <th field="uploaddate" width="150" align="center">日期</th>
+    </tr>
+    </thead>
+</table>
+<div id="tb">
+    <a href="javascript:add()" class="easyui-linkbutton"  iconCls="icon-add" plain="true">添加</a>
+    <a href="javascript:deleteHeadPicture()" class="easyui-linkbutton"  iconCls="icon-edit" plain="true">删除</a>
+    <a href="javascript:enable()" class="easyui-linkbutton"  iconCls="icon-add" plain="true">启用</a>
+    <a href="javascript:disable()" class="easyui-linkbutton"  iconCls="icon-edit" plain="true">禁用</a>
+    <a href="javascript:look()" class="easyui-linkbutton"  iconCls="icon-edit" plain="true">查看</a>
 </div>
-<div region="west" style="width: 200px" title="管理员" split="true">
-    <div id="nvgtmenu" class="easyui-accordion"
-         data-options="border:false">
-        <div title="用户管理">
-            <ul id="usertree">
-            </ul>
-        </div>
-        <div title="摄影点管理">
-            <ul id="pointtree">
-            </ul>
-        </div>
-    </div>
-</div>
+<div id="dlg" class="easyui-dialog" closable="true"
+     style="width: 400px; height: 400px; padding: 5px 5px" closed="true"
+     buttons="#dlg-buttons" >
+    <img id="photo" src="" style="width: 100%; height: 100%;"/>
 
+</div>
+<div id="add" class="easyui-dialog" closable="false"
+     style="width: 270px; height: 200px; padding: 5px 5px" closed="true"
+     buttons="#add-buttons" >
+    <form id="fm" method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/admin/addHeadPicture.action">
+        <table cellspacing="8px">
+            <tr>
+                <td>头像：</td>
+                <td><input  type="file" name="file" id="" accept=".jpg" style="width: 160px"></td>
+            </tr>
+        </table>
+    </form>
+
+</div>
+<div id="add-buttons">
+    <a href="javascript:saveHeadPicture()" class="easyui-linkbutton"
+       iconCls="icon-ok">保存</a>
+    <a href="javascript:closeAdd()"
+       class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+</div>
 </body>
 </html>

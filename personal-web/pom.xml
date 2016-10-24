@@ -39,6 +39,11 @@
             <artifactId>personal-controller</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.personal</groupId>
+            <artifactId>personal-interceptor</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 

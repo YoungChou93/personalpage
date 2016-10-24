@@ -35,6 +35,10 @@
         <property name="visitRecordDao" ref="visitRecordDao"/>
     </bean>
 
+    <bean id="visitTotalService" class="com.personal.service.VisitTotalServiceImpl">
+        <property name="visitTotalDao" ref="visitTotalDao"/>
+    </bean>
+
     <tx:advice id="serviceTxAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="visitIndex" isolation="READ_COMMITTED"  />

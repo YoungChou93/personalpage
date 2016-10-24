@@ -12,9 +12,9 @@ import java.util.Map;
  * Date : 2016/10/15
  */
 public interface HeadPictureDao {
-    HeadPicture selectByPrimaryKey(String id);
+    HeadPicture selectByPrimaryKey(Integer id);
 
-    int deleteByPrimaryKey(String id);
+    int deleteByPrimaryKey(Integer id);
 
     int insertSelective(HeadPicture record);
 
