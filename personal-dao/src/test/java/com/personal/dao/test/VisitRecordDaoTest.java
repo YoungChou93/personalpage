@@ -30,11 +30,15 @@ public class VisitRecordDaoTest {
 
     @Test
     public void test(){
-        VisitRecord  visitRecord=new VisitRecord();
+        /*VisitRecord  visitRecord=new VisitRecord();
         visitRecord.setId("1");
         visitRecord.setIpaddr("192.168.2.1");
         visitRecord.setDate(new Date());
-        System.out.println(visitRecordDao.insertSelective(visitRecord));
+        System.out.println(visitRecordDao.insertSelective(visitRecord));*/
+        VisitRecord  visitRecord=new VisitRecord();
+        visitRecord.setId("1");
+        visitRecord.setIpaddr("192.168.2.1");
+
 
     }
 }

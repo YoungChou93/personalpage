@@ -50,7 +50,9 @@
     <tr>
         <th field="id" width="150" align="center">ID</th>
         <th field="ipaddr" width="150" align="center">IP</th>
-        <th field="date" width="150" align="center" >日期</th>
+        <th field="sessionid" width="150" align="center">SessionID</th>
+        <th field="number" width="150" align="center" >次数</th>
+        <th field="date" width="150" align="center" >首次时间</th>
     </tr>
     </thead>
 </table>

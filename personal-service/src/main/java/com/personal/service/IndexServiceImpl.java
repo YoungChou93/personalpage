@@ -59,6 +59,17 @@ public class IndexServiceImpl implements IndexService {
 
         Map<String, Object> oldmap = new HashMap<String, Object>();
         oldmap.put("id",todayStr+"%");
+        oldmap.put("ipaddr",ipaddr);
+
+        Long totalnumber=visitRecordDao.getTotalNumber(oldmap);
+        Long totalcount=visitRecordDao.getTotalVisitRecord(oldmap);
+
+
+        if(totalnumber!=null && totalnumber!=null && (totalnumber>300 || totalcount>50)){
+            result.put("error","访问过于频繁！");
+            return result;
+        }
+
         oldmap.put("sessionid",seaaionid);
         VisitRecord oldRecord=visitRecordDao.selectByMap(oldmap);
 
@@ -94,6 +105,11 @@ public class IndexServiceImpl implements IndexService {
 
             totals.setNumber(totals.getNumber() + 1);
             visitTotalDao.updateByPrimaryKeySelective(totals);
+        }else{
+
+            oldRecord.setNumber(oldRecord.getNumber()+1);
+            visitRecordDao.updateByPrimaryKeySelective(oldRecord);
+
         }
         result.put("total",totals.getNumber());
         result.put("today",visitTotal.getNumber());

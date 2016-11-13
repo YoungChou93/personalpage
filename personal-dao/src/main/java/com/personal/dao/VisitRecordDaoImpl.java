@@ -59,4 +59,9 @@ public class VisitRecordDaoImpl implements VisitRecordDao {
     public String getMaxID(Map<String, Object> map) {
         return sessionTemplate.selectOne( "com.personal.dao.VisitRecordDao.getMaxID", map);
     }
+
+    @Override
+    public Long getTotalNumber(Map<String, Object> map) {
+        return sessionTemplate.selectOne( "com.personal.dao.VisitRecordDao.getTotalNumber", map);
+    }
 }

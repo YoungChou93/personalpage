@@ -11,7 +11,7 @@
 	<!-- 设置工程的根目录 -->
 	<context-param>
 		<param-name>webAppRootKey</param-name>
-		<param-value>webapp.root</param-value>
+		<param-value>personal-web.root</param-value>
 	</context-param>
 
 	<!-- Spring配置文件 -->

@@ -11,6 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-<p>未知错误</p>
+<p>出现错误！</p>
+<p>${error}</p>
 </body>
 </html>

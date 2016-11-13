@@ -6,11 +6,12 @@
     <result column="IPaddr" property="ipaddr" jdbcType="VARCHAR" />
     <result column="Sessionid" property="sessionid" jdbcType="VARCHAR" />
     <result column="Date" property="date" jdbcType="TIMESTAMP" />
+    <result column="Number" property="number" jdbcType="INTEGER" />
     <result column="UnUsed1" property="unused1" jdbcType="VARCHAR" />
     <result column="UnUsed2" property="unused2" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    Id, IPaddr,Sessionid, Date, UnUsed1, UnUsed2
+    Id, IPaddr,Sessionid, Date,Number, UnUsed1, UnUsed2
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -23,6 +24,9 @@
     <where>
       <if test="id !=null and id !=''">
         and Id like #{id}
+      </if>
+      <if test="ipaddr !=null and ipaddr !=''">
+        and IPaddr = #{ipaddr}
       </if>
       <if test="sessionid !=null and sessionid !=''">
         and Sessionid = #{sessionid}
@@ -48,6 +52,9 @@
       <if test="date != null" >
         Date,
       </if>
+      <if test="number != null" >
+        Number,
+      </if>
       <if test="unused1 != null" >
         UnUsed1,
       </if>
@@ -67,6 +74,9 @@
       </if>
       <if test="date != null" >
         #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
       </if>
       <if test="unused1 != null" >
         #{unused1,jdbcType=VARCHAR},
@@ -88,6 +98,9 @@
       <if test="date != null" >
         Date = #{date,jdbcType=TIMESTAMP},
       </if>
+      <if test="number != null" >
+        Number = #{number,jdbcType=INTEGER},
+      </if>
       <if test="unused1 != null" >
         UnUsed1 = #{unused1,jdbcType=VARCHAR},
       </if>
@@ -100,8 +113,14 @@
   <select id="findVisitRecord" parameterType="Map" resultMap="BaseResultMap">
     select * from visitrecord
     <where>
-      <if test="nickname !=null and nickname != ''">
-        and Nickname like #{nickname}
+      <if test="id !=null and id !=''">
+        and Id like #{id}
+      </if>
+      <if test="ipaddr !=null and ipaddr !=''">
+        and IPaddr = #{ipaddr}
+      </if>
+      <if test="sessionid !=null and sessionid !=''">
+        and Sessionid = #{sessionid}
       </if>
     </where>
     <if test="start!=null and size!=null">
@@ -112,8 +131,11 @@
   <select id="getTotalVisitRecord" parameterType="Map" resultType="Long">
     select count(*) from visitrecord
     <where>
-      <if test="nickname !=null and nickname != ''">
-        and Nickname like #{nickname}
+      <if test="id !=null and id !=''">
+        and Id like #{id}
+      </if>
+      <if test="ipaddr !=null and ipaddr !=''">
+        and IPaddr = #{ipaddr}
       </if>
     </where>
   </select>
@@ -123,6 +145,18 @@
     <where>
       <if test="prefix !=null and prefix != ''">
         and id like #{prefix}
+      </if>
+    </where>
+  </select>
+
+  <select id="getTotalNumber" parameterType="Map" resultType="Long">
+    select SUM(Number) from visitrecord
+    <where>
+      <if test="id !=null and id !=''">
+        and Id like #{id}
+      </if>
+      <if test="ipaddr !=null and ipaddr !=''">
+        and IPaddr = #{ipaddr}
       </if>
     </where>
   </select>

@@ -25,7 +25,7 @@ public class IndexServiceTest {
     @Test
     public void test(){
 
-        indexService.visitIndex("1.1.1.1");
+        //indexService.visitIndex("1.1.1.1");
 
     }
 

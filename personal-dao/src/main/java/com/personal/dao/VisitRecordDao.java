@@ -27,4 +27,6 @@ public interface VisitRecordDao {
     Long getTotalVisitRecord(Map<String, Object> map);
 
     String getMaxID(Map<String, Object> map) ;
+
+    Long getTotalNumber(Map<String, Object> map);
 }

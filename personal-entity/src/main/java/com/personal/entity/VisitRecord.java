@@ -17,6 +17,8 @@ public class VisitRecord {
 
     private Date date;
 
+    private Integer number;
+
     private String unused1;
 
     private String unused2;
@@ -67,5 +69,13 @@ public class VisitRecord {
 
     public void setUnused2(String unused2) {
         this.unused2 = unused2 == null ? null : unused2.trim();
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 }
