@@ -30,13 +30,14 @@
             -webkit-background-size: cover;
             -moz-background-size: cover;
             -o-background-size: cover;
+            height:90%;
             min-height: 700px;
         }
         .banner p{
             padding-top:5px;
             padding-left:5px;
             font-family:微软雅黑;
-            font-size: 1 em;
+            font-size: 20px;
             color:white;
         }
         .index-bottom {
@@ -61,6 +62,7 @@
 <body>
 <div class="banner">
     <p>${personal.title}</p>
+    <div id="weather" class="text-center" style="position:absolute;right:5px;top:5px;padding:0px;width: 180px;height:30px;"></div>
     <div class="container" style="padding:20px;padding-top:30px;">
         <div class="row">
             <div class="col-md-12 text-center">
@@ -117,7 +119,7 @@
             <img src="${pageContext.request.contextPath}/res/img/citypoint2.jpg" alt="..."  style="width:80%;">
         </div>
         <div class="col-md-12 col-xs-12 text-center" style="margin-top:20px;">
-            <a href="http://zhouyangalan.com.cn/point-web" class="btn btn-primary" target="_blank">start with City Point</a>
+            <a href="http://115.159.56.151:8080/point/map.action" class="btn btn-primary" target="_blank">start with City Point</a>
         </div>
     </div>
 </div>
@@ -162,6 +164,15 @@
     $(window).load(function(){
         $('body').addClass('loaded');
     });
+    function callback(result) {
+        var weather="<p style='float:left;font-size: 20px;margin-right:10px;'>"+result.Cityname+"</p>"+
+                "<img style='float:left;height:30px;margin-right:10px;' src='${pageContext.request.contextPath}/res/weather/"+result.Image+"'/>"+
+                "<p style='float:left;font-size: 20px;'>"+result.Currenttemp+"℃</p>";
+
+        $('#weather').append(weather)
+    }
+</script>
+<script type="text/javascript" src="http://120.24.64.3/jsonp?cityname=武汉">
 </script>
 </body>
 </html>
